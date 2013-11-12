@@ -1,0 +1,24 @@
+{
+	"name": "infoshool+",
+	"version": "0.1",
+	"manifest_version": 2,
+	"description": "WARNING! UNSTABLE VERSION (Alpha) - Spaggiari merda",
+  "author": "Mattia Dalla Via (4iB)",
+  "web_accessible_resources": [
+    "html/nuovaHome.html",
+    "img/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [ "https://web.spaggiari.eu/*" ],
+      "css": [
+        "css/reset.css",
+        "css/style.css"
+      ],
+      "js": [
+        "js/Voti.js",
+        "js/script.js"
+      ]
+    }
+  ]
+}
