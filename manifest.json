@@ -17,6 +17,7 @@
         "css/style.css"
       ],
       "js": [
+        "js/Pagina.js",
         "js/PaginaVoti.js",
         "js/main.js"
       ]

@@ -43,8 +43,9 @@ function PaginaVoti() {
           
           voto = parseInt(voto);
           data = nodoVoto.parentNode.parentNode.getElementsByClassName("voto_data")[0].innerHTML;
-          dataGiorno = parseInt(data.charAt(0)+""+data.charAt(1));
-          dataMese = parseInt(data.charAt(3)+""+data.charAt(4));
+          data = data.split("/");
+          dataGiorno = parseInt(data[0]);
+          dataMese = parseInt(data[1]);
           if( (j>=2&&j<=6) || (j>=17&&j<=21) )
             tipo = "Scritto/Grafico";
           if( (j>=7&&j<=11) || (j>=22&&j<=26) )
@@ -62,6 +63,9 @@ function PaginaVoti() {
         }
       
       }
+      
+      materia.voti = materia.getVotiOrdinatiPerData();
+      
     }
     
   }
@@ -143,7 +147,26 @@ function Materia(nomeMateria) {
     return media;
     
   }
-
+  
+  /**
+   * Metodo che restituisce i voti di una materia in ordine cronologico.
+   */
+  this.getVotiOrdinatiPerData = function() {
+    
+    return this.voti.sort( valutaDataPeriodo );
+    
+    function valutaDataPeriodo(a, b) {
+      if(a.periodo==b.periodo)
+        return a.getDataMeseGiorno() > b.getDataMeseGiorno();
+      else
+        if(a.periodo=='primo')
+          return -1;
+        else
+          return 1;
+    }
+    
+  }
+  
 }
 
 /**
@@ -160,5 +183,26 @@ function Voto(valoreVoto, tipoVoto, giornoDataVoto, meseDataVoto, periodoVoto, c
   this.meseData = meseDataVoto;
   this.periodo = periodoVoto;
   this.commento = commentoVoto;
+  
+  /**
+   * metodo che restituisce la data in formato "mesegiorno".
+   */
+  this.getDataMeseGiorno = function() {
+    
+    var giornoDoppiaCifra, meseDeppiaCifra;
+    
+    if(this.giornoData<10)
+      giornoDoppiaCifra = '0'+this.giornoData;
+    else
+      giornoDoppiaCifra = this.giornoData;
+      
+    if(this.meseData<10)
+      meseDoppiaCifra = '0'+this.meseData;
+    else
+      meseDoppiaCifra = this.meseData;
+    
+    return parseInt(meseDoppiaCifra + '' + giornoDoppiaCifra);
+    
+  }
   
 }

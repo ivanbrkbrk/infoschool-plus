@@ -7,15 +7,17 @@ var pagina;
 
 if(url.indexOf("menu")>0) {
   
-  pagina = getPagina("html/home.html");
-  document.write(pagina);
+  pagina = new Pagina( Pagina.getDocumento("html/home.html") );
+  document.write(pagina.getPagina());
 
 } else if(url.indexOf("voti")>0) {
   
   var paginaVoti = new PaginaVoti();
   paginaVoti.getVotiDaPagina(document);
   pagina = paginaVoti.getTabellaVotiHtml();
-  document.write(pagina);
+  var pag = new Pagina(pagina);
+
+  document.write(pag.getPagina());
   
 }
 
@@ -25,16 +27,3 @@ if(url.indexOf("menu")>0) {
 
 
 
-/**
- * Funzione che restituisce il documento nel percorso specificato come parametro.
- * @param path Il percorso del documento.
- * @return Una striga contenente la pagina.
- */
-function getPagina(path){
-  
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", chrome.extension.getURL("/")+path, false );
-  xmlHttp.send( null );
-  return xmlHttp.responseText;
-  
-}
