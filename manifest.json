@@ -13,10 +13,11 @@
       "matches": [ "https://web.spaggiari.eu/*" ],
       "css": [
         "css/reset.css",
+        "css/paginaVoti.css",
         "css/style.css"
       ],
       "js": [
-        "js/Voti.js",
+        "js/PaginaVoti.js",
         "js/script.js"
       ]
     }

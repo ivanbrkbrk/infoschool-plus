@@ -1,23 +1,21 @@
 /**
  * Classe per la gestione della pagina dei voti.
  */
-function PaginaVoti(pagina) {
+function PaginaVoti() {
   
   /**
    * Costruttore
    */
   this.materie = new Array();
-  getVotiDaPagina(pagina);
   
   /**
    * Metodo che legge i dati dalla pagina originaria e crea una struttura di dati con materie e voti.
    * @return Un array di oggetti Materia che contengono i voti.
    */
-  function getVotiDaPagina(pagina) {
+  this.getVotiDaPagina = function(pagina) {
     
-    var j=0, y=0, classe, nome, materia, voto;
+    var j=0, y=0, classe, nome, materia, voto, nodoVoto, data, dataGiorno, dataMese, tipo, periodo;
     var righeVoti = new Array();
-    var materie = new Array();
     
     var tabellaVoti = pagina.getElementById("data_table_2");
     var righeTabella = tabellaVoti.getElementsByTagName("tr");
@@ -35,20 +33,36 @@ function PaginaVoti(pagina) {
       nome = righeVoti[i].getElementsByTagName("td")[1].innerHTML;
       nome = nome.replace("&nbsp","");
       nome = nome.replace(";","");
-      materia = materie[i] = new Materia(nome);
+      materia = this.materie[i] = new Materia(nome);
       
       y=0;
       for(var j= 2; j <= 31; j++) {
-        voto = righeVoti[i].getElementsByTagName("td")[j].getElementsByTagName("p")[0].innerHTML;
+        nodoVoto = righeVoti[i].getElementsByTagName("td")[j].getElementsByTagName("p")[0];
+        voto = nodoVoto.innerHTML;
         if(parseInt(voto)){
-          materia.aggiungiVoto(parseInt(voto),"",10,10,"bla");
+          
+          voto = parseInt(voto);
+          data = nodoVoto.parentNode.parentNode.getElementsByClassName("voto_data")[0].innerHTML;
+          dataGiorno = parseInt(data.charAt(0)+""+data.charAt(1));
+          dataMese = parseInt(data.charAt(3)+""+data.charAt(4));
+          if( (j>=2&&j<=6) || (j>=17&&j<=21) )
+            tipo = "Scritto/Grafico";
+          if( (j>=7&&j<=11) || (j>=22&&j<=26) )
+            tipo = "Orale";
+          if( (j>=12&&j<=16) || (j>=27&&j<=31) )
+            tipo = "Orale";
+          if( j>=2&&j<=16 )
+            periodo = "primo";
+          else
+            periodo = "secondo";
+            
+          materia.aggiungiVoto(voto,tipo,dataGiorno,dataMese,periodo,"Lorem ipsum");
+
           y++;
         }
       
       }
     }
-
-    this.materie = materie;
     
   }
 
@@ -61,23 +75,28 @@ function PaginaVoti(pagina) {
     
     var tabellaVotiHtml = "", materia;
     
-    tabellaVotiHtml += "<table>";
+    tabellaVotiHtml += '<div id="tabellaVoti">';
     
-    for(var i=0; i<materie.length; i++) {
+    for(var i=0; i<this.materie.length; i++) {
       
-      materia = materie[i];
+      materia = this.materie[i];
       
-      tabellaVotiHtml += "<tr>";
-      tabellaVotiHtml += "<th>"+materia.nome+"</th>";
+      tabellaVotiHtml += '<div class="rigaMateria" id="riga'+materia.nome.replace(" ","_")+'">';
+      tabellaVotiHtml += '<div class="nomeMateria">'+materia.nome+'</div>';
       
-      for(var j=0; j<materia.voti.length; j++)
-        tabellaVotiHtml += "<td>"+materia.voti[j].valore+materia.voti[j].commento+"</td>";
+      tabellaVotiHtml += '<div class="bloccoVoti">';
+      for(var j=0; j<materia.voti.length; j++) {
+        tabellaVotiHtml += '<div class="voto voto' + materia.voti[j].valore + '">';
+        tabellaVotiHtml += materia.voti[j].valore;
+        tabellaVotiHtml += '<div class="infoVoto">data:'+materia.voti[j].giornoData+' / '+materia.voti[j].meseData+'<br>'+materia.voti[j].tipo+'</div>';
+        tabellaVotiHtml += '</div>';
+      }
       
-      tabellaVotiHtml += "</tr>";
+      tabellaVotiHtml += "</div></div>";
       
     }
     
-    tabellaVotiHtml += "</table>";
+    tabellaVotiHtml += "</div>";
     
     return tabellaVotiHtml;
 
@@ -85,7 +104,10 @@ function PaginaVoti(pagina) {
 
 
 
+
 }
+
+
 
 /**
  * Classe per la gestione dei dati di una materia.
@@ -101,9 +123,9 @@ function Materia(nomeMateria) {
   /**
    * Metodo che aggiunge un voto.
    */
-  this.aggiungiVoto = function(valoreVoto, tipoVoto, giornoDataVoto, meseDataVoto, commentoVoto) {
+  this.aggiungiVoto = function(valoreVoto, tipoVoto, giornoDataVoto, meseDataVoto, periodoVoto, commentoVoto) {
     
-    this.voti[this.voti.length] = new Voto(valoreVoto, tipoVoto, giornoDataVoto, meseDataVoto, commentoVoto);
+    this.voti[this.voti.length] = new Voto(valoreVoto, tipoVoto, giornoDataVoto, meseDataVoto, periodoVoto, commentoVoto);
     
   }
       
@@ -127,7 +149,7 @@ function Materia(nomeMateria) {
 /**
  * Classe per la gestione di un voto.
  */
-function Voto(valoreVoto, tipoVoto, giornoDataVoto, meseDataVoto, commentoVoto) {
+function Voto(valoreVoto, tipoVoto, giornoDataVoto, meseDataVoto, periodoVoto, commentoVoto) {
   
   /**
    * Costruttore.
@@ -136,6 +158,7 @@ function Voto(valoreVoto, tipoVoto, giornoDataVoto, meseDataVoto, commentoVoto) 
   this.tipo = tipoVoto;
   this.giornoData = giornoDataVoto;
   this.meseData = meseDataVoto;
+  this.periodo = periodoVoto;
   this.commento = commentoVoto;
   
 }

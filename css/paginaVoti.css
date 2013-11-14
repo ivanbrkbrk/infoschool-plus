@@ -1,0 +1,52 @@
+#tabellaVoti {
+  padding:20px;
+}
+
+#tabellaVoti .rigaMateria {
+  clear:both;
+  margin:0 0 10px 0;
+}
+
+#tabellaVoti .rigaMateria .nomeMateria {
+  float:left;
+  margin:5px;
+  font-weight:bold;
+  width:150px;
+}
+
+#tabellaVoti .rigaMateria .bloccoVoti {
+  float:left;
+  background-image:url('chrome-extension://__MSG_@@extension_id__/img/pixelNero.png');
+  background-size:2px 2px;
+  background-repeat:repeat-x;
+  background-position:center;
+  margin-left:40px;
+}
+
+#tabellaVoti .rigaMateria .voto {
+  float:left;
+  padding:2px;
+  margin:3px 50px;
+  background-color:white;
+  border-radius:5px;
+  border:2px solid green;
+  cursor:default;
+}
+
+#tabellaVoti .voto .infoVoto {
+  display:none;
+  position:absolute;
+}
+
+#tabellaVoti .voto:hover .infoVoto {
+  display:block;
+  background-color:black;
+  color:white;
+  margin:-80px 0 0 -55px;
+  border:1px solid green;
+  width:120px;
+  height:40px;
+  padding:5px;
+  border-radius:10px;
+  font-size:14px;
+}

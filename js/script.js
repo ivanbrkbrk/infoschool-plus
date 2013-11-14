@@ -12,8 +12,9 @@ if(url.indexOf("menu")>0) {
 
 } else if(url.indexOf("voti")>0) {
   
-  var voti = Voti.getVotiDaPagina();
-  pagina = Voti.getTabellaVotiHtml(voti);
+  var paginaVoti = new PaginaVoti();
+  paginaVoti.getVotiDaPagina(document);
+  pagina = paginaVoti.getTabellaVotiHtml();
   document.write(pagina);
   
 }
