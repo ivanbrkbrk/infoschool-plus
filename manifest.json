@@ -5,7 +5,7 @@
 	"description": "WARNING! UNSTABLE VERSION (Alpha) - Spaggiari merda",
   "author": "Mattia Dalla Via (4iB)",
   "web_accessible_resources": [
-    "html/nuovaHome.html",
+    "html/*",
     "img/*"
   ],
   "content_scripts": [
@@ -18,7 +18,7 @@
       ],
       "js": [
         "js/PaginaVoti.js",
-        "js/script.js"
+        "js/main.js"
       ]
     }
   ]

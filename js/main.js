@@ -7,7 +7,7 @@ var pagina;
 
 if(url.indexOf("menu")>0) {
   
-  pagina = getPagina("html/nuovaHome.html");
+  pagina = getPagina("html/home.html");
   document.write(pagina);
 
 } else if(url.indexOf("voti")>0) {
