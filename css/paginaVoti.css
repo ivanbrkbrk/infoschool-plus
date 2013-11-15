@@ -14,6 +14,18 @@
   width:150px;
 }
 
+#tabellaVoti .rigaMateria .graficoMateria {
+  width:500px;
+  height:200px;
+  /*position:absolute;
+  display:none;*/
+
+}
+
+#tabellaVoti .rigaMateria:hover .graficoMateria {
+  display:block;
+}
+
 #tabellaVoti .rigaMateria .bloccoVoti {
   float:left;
   background-image:url('chrome-extension://__MSG_@@extension_id__/img/pixelNero.png');

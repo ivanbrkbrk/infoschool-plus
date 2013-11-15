@@ -19,11 +19,14 @@ if(url.indexOf("menu")>0) {
 
   document.write(pag.getPagina());
   
+} else if((url.indexOf("login")>0)) {
+  
+  chrome.extension.sendRequest({method: "getLocalStorage", key: "login"}, function(response) {
+    document.getElementsByClassName("input_account")[0].value = response.data;
+  });
+  chrome.extension.sendRequest({method: "getLocalStorage", key: "password"}, function(response) {
+    document.getElementsByClassName("input_account")[1].value = response.data;
+    document.getElementById('formlogin').submit();
+  });
+  
 }
-
-
-
-
-
-
-

@@ -4,9 +4,14 @@
 	"manifest_version": 2,
 	"description": "WARNING! UNSTABLE VERSION (Alpha) - Spaggiari merda",
   "author": "Mattia Dalla Via (4iB)",
+  "options_page": "html/opzioni.html",
+  "background": {
+    "scripts": ["js/background.js"]
+  },
   "web_accessible_resources": [
     "html/*",
-    "img/*"
+    "img/*",
+    "js/*"
   ],
   "content_scripts": [
     {

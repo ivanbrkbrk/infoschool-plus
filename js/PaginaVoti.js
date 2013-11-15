@@ -80,6 +80,7 @@ function PaginaVoti() {
     var tabellaVotiHtml = "", materia;
     
     tabellaVotiHtml += '<div id="tabellaVoti">';
+    tabellaVotiHtml += '<script src="'+chrome.extension.getURL("/")+'js/Chart.js"></script>';
     
     for(var i=0; i<this.materie.length; i++) {
       
@@ -95,8 +96,27 @@ function PaginaVoti() {
         tabellaVotiHtml += '<div class="infoVoto">data:'+materia.voti[j].giornoData+' / '+materia.voti[j].meseData+'<br>'+materia.voti[j].tipo+'</div>';
         tabellaVotiHtml += '</div>';
       }
+           
+      tabellaVotiHtml += "</div>";
       
-      tabellaVotiHtml += "</div></div>";
+      tabellaVotiHtml += '<canvas id="grafico'+materia.nome.replace(/[^A-Za-z0-9]/g,'')+'" class="graficoMateria"></canvas>';
+      tabellaVotiHtml += '<script>';
+      tabellaVotiHtml += 'var ctx = document.getElementById("grafico'+materia.nome.replace(/[^A-Za-z0-9]/g,'')+'").getContext("2d");';
+      tabellaVotiHtml += 'var data={labels:[';
+      for(var j=0; j<materia.voti.length; j++) {
+        tabellaVotiHtml += '"'+materia.voti[j].giornoData+' / '+materia.voti[j].meseData+'"';
+        if(materia.voti.length!=j-1)
+          tabellaVotiHtml += ',';
+      }
+      tabellaVotiHtml += '],datasets:[{fillColor:"rgba(220,220,220,0.5)",strokeColor:"rgba(220,220,220,1)",pointColor:"rgba(220,220,220,1)",pointStrokeColor:"#fff",data:[';
+      for(var j=0; j<materia.voti.length; j++) {
+        tabellaVotiHtml += materia.voti[j].valore;
+        if(materia.voti.length!=j-1)
+          tabellaVotiHtml += ',';
+      }
+      tabellaVotiHtml += ']}]};';
+      tabellaVotiHtml += 'new Chart(ctx).Line(data);';
+      tabellaVotiHtml += '</script></div>';
       
     }
     
