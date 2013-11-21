@@ -287,9 +287,9 @@ window.Chart = function(context){
 		chart.Line.defaults = {
 			scaleOverlay : false,
 			scaleOverride : true,
-			scaleSteps : 9,
+			scaleSteps : 7,
 			scaleStepWidth : 1,
-			scaleStartValue : 1,
+			scaleStartValue : 3,
 			scaleLineColor : "rgba(0,0,0,.1)",
 			scaleLineWidth : 1,
 			scaleShowLabels : true,

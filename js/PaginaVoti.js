@@ -77,7 +77,8 @@ function PaginaVoti() {
    */
   this.getTabellaVotiHtml = function() {
     
-    var tabellaVotiHtml = "", materia;
+    var tabellaVotiHtml = "", materia, marginLeft, marginRight, valoreVoto;
+    var coloriVoti = new Array("#A0522D","#A0522D","#A0522D","#A0522D","#A0522D","#FFDEAD","#FFFACD","#8FBC8F","#3CB371","#6B8E23","#556B2F");
     
     tabellaVotiHtml += '<div id="tabellaVoti">';
     tabellaVotiHtml += '<script src="'+chrome.extension.getURL("/")+'js/Chart.js"></script>';
@@ -89,17 +90,9 @@ function PaginaVoti() {
       tabellaVotiHtml += '<div class="rigaMateria" id="riga'+materia.nome.replace(" ","_")+'">';
       tabellaVotiHtml += '<div class="nomeMateria">'+materia.nome+'</div>';
       
-      tabellaVotiHtml += '<div class="bloccoVoti">';
-      for(var j=0; j<materia.voti.length; j++) {
-        tabellaVotiHtml += '<div class="voto voto' + materia.voti[j].valore + '">';
-        tabellaVotiHtml += materia.voti[j].valore;
-        tabellaVotiHtml += '<div class="infoVoto">data:'+materia.voti[j].giornoData+' / '+materia.voti[j].meseData+'<br>'+materia.voti[j].tipo+'</div>';
-        tabellaVotiHtml += '</div>';
-      }
-           
-      tabellaVotiHtml += "</div>";
+      tabellaVotiHtml += '<div class="votiEGrafico">';
       
-      tabellaVotiHtml += '<canvas id="grafico'+materia.nome.replace(/[^A-Za-z0-9]/g,'')+'" class="graficoMateria"></canvas>';
+      tabellaVotiHtml += '<canvas id="grafico'+materia.nome.replace(/[^A-Za-z0-9]/g,'')+'" class="graficoMateria" height="120" width="880"></canvas>';
       tabellaVotiHtml += '<script>';
       tabellaVotiHtml += 'var ctx = document.getElementById("grafico'+materia.nome.replace(/[^A-Za-z0-9]/g,'')+'").getContext("2d");';
       tabellaVotiHtml += 'var data={labels:[';
@@ -116,7 +109,23 @@ function PaginaVoti() {
       }
       tabellaVotiHtml += ']}]};';
       tabellaVotiHtml += 'new Chart(ctx).Line(data);';
-      tabellaVotiHtml += '</script></div>';
+      tabellaVotiHtml += '</script>';
+      
+      tabellaVotiHtml += '<div class="bloccoVoti">';
+      for(var j=0; j<materia.voti.length; j++) {
+        marginLeft = marginRight = (850/((materia.voti.length*2)-2))-14-(24/materia.voti.length);
+        if(j==0)
+          marginLeft = 0;
+        if(j==materia.voti.length-1)
+          marginRight = 0;
+        valoreVoto = materia.voti[j].valore;
+        tabellaVotiHtml += '<div class="voto voto' + valoreVoto + '" style="margin-left:'+marginLeft+'px;margin-right:'+marginRight+'px;background-color:'+coloriVoti[valoreVoto]+'">';
+        tabellaVotiHtml += valoreVoto;
+        tabellaVotiHtml += '<div class="infoVoto">data:'+materia.voti[j].giornoData+' / '+materia.voti[j].meseData+'<br>'+materia.voti[j].tipo+'</div>';
+        tabellaVotiHtml += '</div>';
+      }
+           
+      tabellaVotiHtml += "</div></div></div>";
       
     }
     
